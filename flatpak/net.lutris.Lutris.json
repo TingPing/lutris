@@ -1,0 +1,103 @@
+{
+  "app-id": "net.lutris.Lutris",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "3.22",
+  "sdk": "org.gnome.Sdk",
+  "command": "lutris",
+  "rename-desktop-file": "lutris.desktop",
+  "rename-appdata-file": "lutris.appdata.xml",
+  "rename-icon": "lutris",
+  "copy-icon": true,
+  "finish-args": [
+      "--share=ipc",
+      "--socket=x11",
+      "--socket=wayland",
+      "--share=network",
+
+      "--talk-name=org.gnome.SettingsDaemon",
+
+      "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
+      "--filesystem=xdg-run/dconf",
+      "--filesystem=~/.config/dconf:ro",
+      "--talk-name=ca.desrt.dconf",
+
+      "--env=SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+  ],
+  "modules": [
+    {
+      "name": "lutris",
+      "no-autogen": true,
+      "post-install": [
+         "mv /app/lib/python3.4/site-packages/lutris-*.egg/share /app/share"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/TingPing/lutris.git",
+          "branch": "tingping/filemonitor"
+        },
+        {
+          "type": "file",
+          "path": "setuptools-makefile",
+          "dest-filename": "Makefile"
+        },
+        {
+          "type": "patch",
+          "path": "0001-Fix-working-under-flatpak.patch"
+        }
+      ],
+      "modules": [
+        {
+          "name": "python-setuptools",
+          "no-autogen": true,
+          "cleanup": [ "/bin" ],
+          "sources": [
+            {
+              "type": "archive",
+              "url": "https://github.com/pypa/setuptools/archive/v32.3.0.tar.gz",
+              "sha256": "ebd453c49de608557344b98a2d2c4b392014d561e49470a615978476bcdba843"
+            },
+            {
+              "type": "file",
+              "path": "setuptools-bootstrap",
+              "dest-filename": "Makefile"
+            }
+          ]            
+        },
+        {
+          "name": "python-evdev",
+          "no-autogen": true,
+          "sources": [
+            {
+              "type": "archive",
+              "url": "https://github.com/gvalkov/python-evdev/archive/v0.6.4.tar.gz",
+              "sha256": "a84b6538885770a6e0ebefb1a65d138d485a13002452bfdd537b07f146af2bd9"
+            },
+            {
+              "type": "file",
+              "path": "setuptools-makefile",
+              "dest-filename": "Makefile"
+            }
+          ]
+        },
+        {
+          "name": "python-yaml",
+          "no-autogen": true,
+          "sources": [
+            {
+              "type": "archive",
+              "url": "http://pyyaml.org/download/pyyaml/PyYAML-3.12.tar.gz",
+              "sha256": "592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab"
+            },
+            {
+              "type": "file",
+              "path": "pyyaml-makefile",
+              "dest-filename": "Makefile"
+            }
+
+          ]
+        }
+      ]
+    }
+  ]
+}

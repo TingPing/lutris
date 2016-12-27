@@ -1,0 +1,4 @@
+all:
+
+install:
+	python3 ./setup.py --without-libyaml install --prefix=/app
