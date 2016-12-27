@@ -35,6 +35,7 @@ setup(
         'pyinotify',
         'evdev'
     ],
+    zip_safe=False,
     url='https://lutris.net',
     description='Install and play any video game on Linux',
     long_description="""Lutris is a gaming platform for GNU/Linux. It's goal is
