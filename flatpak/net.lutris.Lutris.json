@@ -13,6 +13,9 @@
       "--socket=x11",
       "--socket=wayland",
       "--share=network",
+      "--device=dri",
+      "--socket=pulseaudio",
+
 
       "--talk-name=org.gnome.SettingsDaemon",
 
